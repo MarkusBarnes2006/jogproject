@@ -113,8 +113,8 @@ public class Player extends Entity {
 
         if (inAir) {
             if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
-                airSpeed += hitbox.y;
-                gravity += airSpeed;
+                hitbox.y += airSpeed;
+                airSpeed += gravity;
                 updateXPos(xSpeed);
             } else {
                 hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
@@ -149,9 +149,10 @@ public class Player extends Entity {
 
     private void jump() {
         if (inAir) {
-            inAir = true;
-            airSpeed = jumpSpeed;
+            return;
         }
+        inAir = true;
+        airSpeed = jumpSpeed;
         // TODO: if inAir then return
         // TODO: set inAir to true
         // TODO: set airSpeed to jumpSpeed
@@ -171,7 +172,7 @@ public class Player extends Entity {
         }
     }
 
-    private void loadAnimations(){
+    private void loadAnimations() {
         BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
         animations = new BufferedImage[9][6];
         for (int row = 0; row < animations.length; row++)
